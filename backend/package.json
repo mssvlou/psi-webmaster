@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
+  "contributors": [
+    "Marta Lourenço(58249)","Filipe Costa(55549)", "Yichen Cao(58165)"
+  ],
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
+    "serverstart": "DEBUG=heroes_express:* npm start"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-async-handler": "^1.2.0",
+    "express-validator": "^7.0.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "mongoose": "^8.3.1",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
