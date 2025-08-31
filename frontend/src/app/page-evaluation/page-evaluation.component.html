@@ -1,0 +1,93 @@
+<mat-list>
+    <mat-list-item>
+      <span matListItemTitle style="color:#00BFA5">{{"Site URL"}}</span>
+      {{page.pageURL}}
+    </mat-list-item>
+</mat-list>
+
+<h1>Outcomes</h1>
+<mat-list>
+  <mat-list-item>
+    <span matListItemTitle style="color:#00BFA5">{{"Number of tests passed"}}</span>
+    {{page.totalPassed ?? 0}} ({{passedPercentage}}%)
+  </mat-list-item>
+
+  <mat-list-item>
+    <span matListItemTitle style="color:#00BFA5">{{"Number of tests with warning"}}</span>
+    {{page.totalWarning ?? 0}} ({{warningPercentage}}%)
+  </mat-list-item>
+
+  <mat-list-item>
+    <span matListItemTitle style="color:#00BFA5">{{"Number of tests failed"}}</span>
+    {{page.totalFailed ?? 0}} ({{failedPercentage}}%)
+  </mat-list-item>
+
+  <mat-list-item>
+    <span matListItemTitle style="color:#00BFA5">{{"Number of tests not applicable"}}</span>
+    {{page.totalNotApplicable ?? 0}} ({{notApplicablePercentage}}%)
+  </mat-list-item>
+</mat-list>
+
+<h1>Tests</h1>
+
+<div class="container">
+  <mat-chip-listbox selectable multiple #list (change)="setFilter($event,'module')">
+    <mat-chip-option *ngFor="let module of modules" [value]="module" selected="true" color="accent">
+      {{module}}
+    </mat-chip-option>
+  </mat-chip-listbox>
+
+  <mat-chip-listbox selectable multiple #list (change)="setFilter($event,'result')">
+    <mat-chip-option *ngFor="let result of results" [value]="result" selected="true" color="accent">
+      {{result}}
+    </mat-chip-option>
+  </mat-chip-listbox>
+  
+  <mat-chip-listbox selectable multiple #list (change)="setFilter($event,'level')">
+    <mat-chip-option *ngFor="let level of levels" [value]="level" selected="true" color="accent">
+      {{level}}
+    </mat-chip-option>
+  </mat-chip-listbox>
+</div>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let assertion of filteredAssertions">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{assertion.code}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{assertion.outcome}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <h3>Description</h3>
+    <span>{{assertion.description}}</span>
+
+    <h3>Levels</h3>
+    <span>{{assertion.levels.join(', ')}}</span>
+    
+    <mat-list-item>
+      <span matListItemTitle style="color:#00BFA5">Elements Affected</span>
+    </mat-list-item>
+      <cdk-virtual-scroll-viewport itemSize="100" class="viewport">
+        <div *cdkVirtualFor="let element of assertion.elementsAffected" class="element-container">
+          <mat-card [ngClass]="{'passed': element.verdict === 'passed', 'warning': element.verdict === 'warning', 'failed': element.verdict === 'failed'}" class="verdict-card">
+            <div class="verdict-content">
+              <strong>Verdict:</strong> {{element.verdict}}
+              <div *ngFor="let elem of element.elements" class="code-block">
+                <code>{{elem}}</code>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </cdk-virtual-scroll-viewport>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div class="back-button-container">
+  <button mat-fab color="accent" aria-label="Go back button" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+</div>
+

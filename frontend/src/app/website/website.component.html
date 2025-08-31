@@ -1,0 +1,82 @@
+<mat-list>
+  <mat-list-item>
+    <span matListItemTitle style="color:#00BFA5">{{"Site URL"}}</span>
+    {{website.websiteURL}}
+  </mat-list-item>
+  <mat-list-item>
+    <span matListItemTitle style="color:#00BFA5">{{"Added"}}</span>
+    {{website.addedDate |  date: 'dd/MM/yyyy hh:mm:ss'}}
+  </mat-list-item>
+  <mat-list-item>
+    <span matListItemTitle style="color:#00BFA5">{{"Last Evaluation"}}</span>
+    {{website.lastRated |  date: 'dd/MM/yyyy hh:mm:ss'}}
+  </mat-list-item>
+  <mat-list-item>
+    <span matListItemTitle style="color:#00BFA5">{{"Rating status"}}</span>
+    {{website.ratingStatus}}
+  </mat-list-item>
+</mat-list>
+
+<button mat-flat-button color="primary" [disabled]="disableButtons" (click)="delete()">
+  Delete website
+</button>
+
+<mat-tab-group animationDuration="1000ms">
+  <mat-tab label="Pages">
+
+    <div class="submit-page">
+      <h1> Page Catalogue </h1>
+      <div>Submit a page.</div>
+      <form>
+        <mat-form-field [style.width.px]=500>
+          <mat-label>please include website and path.</mat-label>
+          <input matInput #input
+            placeholder="Enter your URL"
+            [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option [value]=website.websiteURL>
+              {{website.websiteURL}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="siteFormControl.hasError('required')">
+            Page cannot be null.
+          </mat-error>
+          <mat-error *ngIf="siteFormControl.hasError('pattern')">
+            Added URL must include the full website + path.
+          </mat-error>
+        </mat-form-field>
+        <button mat-flat-button color="primary"
+          (click)="submit(input.value)"
+          [style.margin-top.px]=-10
+          [style.margin-bottom.px]=6
+          [style.width.px]=100
+          [style.height.px]=52
+          >Submit</button>
+      </form>
+    <app-page-list
+      [monitoredPages]="website.moniteredPages"
+      [showSpinner]="showSpinner" 
+      [disableButtons]="disableButtons"
+      (emitDeleteSelected)="deleteSelected($event)"
+      (emitEvaluateSelected)="evaluateSelected($event)">
+    </app-page-list>
+    </div>
+
+  </mat-tab>
+  <mat-tab label="Statistics">
+
+    <app-website-analysis
+      [websiteName] = "this.website.websiteURL"
+      [stats]="this.stats"
+      [count]="this.count"
+      [dataSource]="this.errorData"
+    ></app-website-analysis>
+
+  </mat-tab>
+</mat-tab-group>
+
+<div class="back-button-container">
+  <button mat-fab color="accent" aria-label="Go back button" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+</div>

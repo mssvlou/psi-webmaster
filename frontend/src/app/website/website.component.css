@@ -1,0 +1,11 @@
+/* .mdc-list-item__primary-text {
+    color: #00BFA5;
+} */
+
+/* ::ng-deep .matListItemTitle {
+    color: #00BFA5;
+} */
+
+.submit-page{
+    overflow-y: hidden;
+}

@@ -1,0 +1,46 @@
+/* In your component CSS file or global styles */
+.viewport {
+    height: 300px; /* Adjust height as needed */
+    width: 100%;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+  
+  .element-container {
+    padding: 10px;
+    /* border-bottom: 1px solid #eee; */
+  }
+  
+  .verdict-card {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .verdict-card.passed {
+    background-color: #306d5a; /* Green for passed */
+    /* border-left: 5px solid #28a745; */
+  }
+  
+  .verdict-card.warning {
+    background-color: #ddb42e; /* Yellow for warning */
+    /* border-left: 5px solid #ffc107; */
+  }
+  
+  .verdict-card.failed {
+    background-color: #b41557; /* Red for failed */
+    /* border-left: 5px solid #dc3545; */
+  }
+  
+  .verdict-content {
+    padding: 10px;
+  }
+  
+  .code-block {
+    background-color: #0f0a24;
+    /* border: 1px solid #ddd; */
+    padding: 10px;
+    margin-bottom: 5px;
+    font-family: monospace;
+    white-space: pre-wrap;
+  }
